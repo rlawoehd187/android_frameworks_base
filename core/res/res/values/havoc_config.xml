@@ -272,6 +272,9 @@
     <integer name="config_longPressOnCameraKeyBehavior">0</integer>
     <integer name="config_doubleTapOnCameraKeyBehavior">0</integer>
 
+    <!-- Force enable hardware keys -->
+    <bool name="config_forceEnableHardwareKeys">false</bool>
+
     <!-- Button brightness -->
     <bool name="config_button_brightness_support">false</bool>
     <integer name="config_button_brightness_default">128</integer>

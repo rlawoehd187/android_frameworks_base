@@ -422,6 +422,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private boolean mANBIEnabled;
 
     private boolean mHwKeysEnabled = true;
+    private boolean mForceEnableKeys;
 
     boolean mVolumeRockerWake;
     private boolean mVolumeMusicControlActive;
@@ -2186,6 +2187,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         mDeviceHardwareKeys = mContext.getResources().getInteger(
                 com.android.internal.R.integer.config_deviceHardwareKeys);
 
+        mForceEnableKeys = mContext.getResources().getBoolean(
+                com.android.internal.R.bool.config_forceEnableHardwareKeys);
+
         mHandleVolumeKeysInWM = mContext.getResources().getBoolean(
                 com.android.internal.R.bool.config_handleVolumeKeysInWindowManager);
 
@@ -2351,11 +2355,12 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     }
 
     public boolean isHwKeysDisabled() {
-        return !mHwKeysEnabled;
+        return !mHwKeysEnabled && !mForceEnableKeys;
     }
 
     private boolean filterDisabledKey(int keyCode) {
-        return !mHwKeysEnabled && (keyCode == KeyEvent.KEYCODE_HOME
+        return !mHwKeysEnabled && !mForceEnableKeys
+                && (keyCode == KeyEvent.KEYCODE_HOME
                 || keyCode == KeyEvent.KEYCODE_MENU
                 || keyCode == KeyEvent.KEYCODE_APP_SWITCH
                 || keyCode == KeyEvent.KEYCODE_ASSIST
